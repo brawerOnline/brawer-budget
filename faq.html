@@ -1,0 +1,87 @@
+<!DOCTYPE HTML5>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width= device-width, initial-scale= 1">
+    <script>
+
+      	navigator.serviceWorker.register('https://brawer.online/budget/service-worker.js');
+        
+     
+    </script>
+    <link rel="stylesheet" href="/style/jquery.mobile-1.4.5.min.css" />
+    <meta charset="utf-8">
+    <script src="/style/jquery-1.11.1.min.js"></script>
+    <script src="/style/jquery.mobile-1.4.5.min.js"></script>
+    
+    <link rel="stylesheet" href="/style/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+    <style>
+      .ui-popup-container {
+        width: 330px;
+      
+      }
+    </style>
+    <script src="/style/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <meta name="theme-color" content="#2F3BA2" />
+    
+    <title>Brawer Budget - FAQ</title><!-- Primary Meta Tags -->
+    <meta name="title" content="Brawer Budget - FAQ">
+    <meta name="description" content="Brawer Budget frequently asked questions.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://brawer.online/budget/faq.html">
+    <meta property="og:title" content="Brawer Budget - FAQ">
+    <meta property="og:description" content="Brawer Budget frequently asked questions.">
+    <meta property="og:image" content="http://brawer.online/budget/media/siteImage.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://brawer.online/budget/faq.html">
+    <meta property="twitter:title" content="Brawer Budget - FAQ">
+    <meta property="twitter:description" content="Brawer Budget frequently asked questions.">
+    <meta property="twitter:image" content="http://brawer.online/budget/media/siteImage.png">
+    <base href="/budget/faq.html" /> 
+  </head>
+  
+  <body data-theme="a" class="ui-responsive">
+    
+    <div data-role="page" id="faq">
+    
+      <div data-role="header" class="ui-responsive">
+        <img src="/media/siteImage.jpg" style="width:100%;">
+        <h6>FAQ</h6>
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-back ui-btn-icon-notext ui-btn-left">Close</a>
+      </div>
+      <div role="main" class="ui-content ui-responsive">
+        <div data-role="collapsibleset" data-theme="a" data-content-theme="a" data-mini="true">
+          <div data-role="collapsible">
+            <h4>If the amount due for a bill changes from month to month, what should I do?</h4>
+            <h6>If the amount due for a bill changes from month to month, what should I do?</h6>
+            <p>We suggest using the upper limit for this bill as the amount. This way, you will have the money for the bill, no matter what the monthly charge is. The remainder will carry over for the next time it is due.</p>
+          </div>
+          <div data-role="collapsible">
+            <h4>How do I add expenses?</h4>
+            <h6>How do I add expenses?</h6>
+            <p>Select the plus sign next to the envelope you want to add an expense to. Here, you can transfer from other envelopes to the selected envelope as well.</p>
+          </div>
+          <div data-role="collapsible">
+            <h4>Help! transactions are shown twice!</h4>
+            <h6>Help! transactions are shown twice!</h6>
+            <p>We are aware of this bug and are working hard to fix it. We understand how this is frustrating. </br>
+            The "View Transactions" is only a reference. The transaction did not happen twice, but is only stored twice. Check your bank balance against your actual bank balance, and it should be the same.</p>
+          </div>
+          <div data-role="collapsible">
+            <h4>Can I delete/edit a transaction?</h4>
+            <h6>Can I delete/edit a transaction?</h6>
+            <p>No. But if you entered a transaction by mistake, you can adjust your bank balance. If you adjust up, it will put the extra money into unaccounted, which can then be moved back to your envelope. If you adjust down, and your unaccounted was set to 0, you will have a negative unaccounted. Remove money from an envelope to bring the unaccounted back to 0 or positive.</p>
+          </div>
+          <div data-role="collapsible">
+            <h4>Why is unaccounted yellow?</h4>
+            <h6>Why is unaccounted yellow?</h6>
+            <p>One goal of this app is to have all your money accounted for. You want your unaccounted amount to be at 0.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

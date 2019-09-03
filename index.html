@@ -1,0 +1,829 @@
+<!DOCTYPE HTML5>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width= device-width, initial-scale= 1">
+    <script>
+
+      	if ('serviceWorker' in navigator) {
+      	navigator.serviceWorker.register('https://brawer.online/budget/service-worker.js');
+      	}
+        
+     
+    </script>
+    <link rel="stylesheet" href="/style/jquery.mobile-1.4.5.min.css" />
+    <meta charset="utf-8">
+    <script src="/style/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+        checkPage();
+
+	function checkPage() {
+	    var _hash = location.hash;
+	
+	    if (_hash != '' && _hash != "#budget") {
+	        var _url = location.href.replace(_hash, "");
+	        window.location.href = _url;
+	    }
+	}
+    </script>
+    
+  
+    <script src="/style/jquery.mobile-1.4.5.min.js"></script>
+    
+    <link rel="stylesheet" href="/style/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+    <style>
+      .ui-popup-container {
+        width: 330px;
+      
+      }
+    </style>
+    <script src="/style/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script>
+	
+	$('#budget').bind('pageinit', function() {
+	console.log("in page create");
+	$('#normBills').listview('refresh');
+	$('#variableEnvelopes').listview('refresh');
+	
+	});
+    </script>
+    <link rel="manifest" href="./manifest.json"/>
+    <meta name="mobile-web-app-capable" content="yes"/> 
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Brawer Budget"/>
+    <link rel="apple-touch-icon" href="touch-icon-iphone.png"/>
+    <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad.png"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="touch-icon-iphone-retina.png"/>
+    <link rel="apple-touch-icon" sizes="167x167" href="touch-icon-ipad-retina.png"/>
+    <!-- iPhone Xs Max (1242px x 2688px) --> 
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" href="/apple-launch-1242x2688.png"/>
+    <!-- iPhone Xr (828px x 1792px) --> 
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" href="/apple-launch-828x1792.png"/>
+    <!-- iPhone X, Xs (1125px x 2436px) --> 
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" href="/apple-launch-1125x2436.png"/>
+    <!-- iPhone 8 Plus, 7 Plus, 6s Plus, 6 Plus (1242px x 2208px) --> 
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)" href="/apple-launch-1242x2208.png"/>
+    <!-- iPhone 8, 7, 6s, 6 (750px x 1334px) --> 
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" href="/apple-launch-750x1334.png"/>
+    <!-- iPad Pro 12.9" (2048px x 2732px) --> 
+    <link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" href="/apple-launch-2048x2732.png"/>
+    <!-- iPad Pro 11” (1668px x 2388px) --> 
+    <link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" href="/apple-launch-1668x2388.png"/>
+    <!-- iPad Pro 10.5" (1668px x 2224px) --> 
+    <link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" href="/apple-launch-1668x2224.png"/>
+    <!-- iPad Mini, Air (1536px x 2048px) --> 
+    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" href="/apple-launch-1536x2048.png"/>
+    <meta name="theme-color" content="#2F3BA2" />
+    
+    <title>Brawer Budget</title><!-- Primary Meta Tags -->
+    <meta name="title" content="Brawer Budget">
+    <meta name="description" content="A stress-free budgeting solution for us all. :)">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://brawer.online/budget/index.html">
+    <meta property="og:title" content="Brawer Budget">
+    <meta property="og:description" content="A stress-free budgeting solution for us all. :)">
+    <meta property="og:image" content="http://brawer.online/budget/media/siteImage.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://brawer.online/budget/index.html">
+    <meta property="twitter:title" content="Brawer Budget">
+    <meta property="twitter:description" content="A stress-free budgeting solution for us all. :)">
+    <meta property="twitter:image" content="http://brawer.online/budget/media/siteImage.png">
+    <base href="/budget/index.html" /> 
+  </head>
+  
+  <body>
+    
+    <div data-role="page" id="budget">
+      <script src="js/app.js" async></script>
+      <div data-role="panel" id="mypanel" data-position="right" data-display="overlay" data-theme="b">
+        <h1>Menu</h1>
+        <ul>
+          <a class="ui-btn-inline ui-btn ui-mini" href='#addIncome' data-rel='popup' data-position-to='window' data-transition='pop'>Add Income</a>
+          <a class="ui-btn-inline ui-btn ui-mini" href='#viewTrans' id="viewTransBut" data-transition='pop'>Transactions</a>
+          <a class="ui-btn-inline ui-btn ui-mini" href='#adjustBankBal' data-rel='popup' data-position-to='window' data-transition='pop'>Adjust Bank</a>
+          <a class="ui-btn-inline ui-btn ui-mini" href='#editPayData' data-transition='pop'>Edit Pay Data</a>
+          <a class="ui-btn-inline ui-btn ui-mini" href='#addBudgetEnvelope' data-transition='pop'>Add Envelope</a>
+          <a class="ui-btn-inline ui-btn ui-mini" href="#deleteData" data-rel='popup' data-position-to='window' class="ui-btn ui-shadow ui-corner-all" data-transition="pop">Delete Data</a>
+          <a class="ui-btn-inline ui-btn ui-mini" href="faq.html" class="ui-btn ui-shadow ui-corner-all" data-transition="pop">FAQ</a>
+          <li></li>
+          <a class="ui-btn-inline ui-btn ui-mini" href="mailto:support@brawer.online?subject=Question/Concern" class="ui-btn ui-shadow ui-corner-all" data-transition="pop">Contact</a>
+          
+          <a class="ui-btn-inline ui-btn ui-mini" href="#about" class="ui-btn ui-shadow ui-corner-all" data-transition="pop">About</a>
+          <li></li>
+          <a class="ui-btn-inline ui-btn ui-mini" href="https://www.patreon.com/bePatron?u=23192606" class="ui-btn ui-shadow ui-corner-all" data-transition="pop">Donate &#128525</a>
+          <li></li>
+          <a class="ui-btn-inline ui-btn ui-mini" href="#budget" data-rel="close">Close panel</a>
+        </ul>
+      </div><!-- /panel -->
+      
+      
+      
+      <div data-role="class nav-bar" class="ui-bar ui-bar-a" id="budgetHeader">
+        <div>Bank Balance: <font color="green" id="headerBankBal">0</font> <a href="#mypanel" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn-right ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext"></a></div>
+        <div>Days until Pay: <font color="grey" id="headerDaysTilPay">7</font></div>
+        <div >Unaccounted monies: <font color="grey" id="headerUnaccounted">0</font>   </div>
+        <div id="unaccountedNotify" hidden><a href="#popupUnaccountedInfo" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-btn-inline    ui-icon-info " data-mini=true title="Learn more">Why negative?</a></div>
+      </div><!--uiibar-->
+  
+  <!--Main section for budget viewing-->
+      <div role="main" class="ui-content">
+        <h3  id="recurHeader">Recurring Bills</h3>
+        <ul data-role="listview" data-split-icon="plus"  data-inset="true" id="normBills">
+
+        </ul>
+    
+        <h3 id="varHeader">Variable Envelopes</h3>
+        <ul data-role="listview" data-split-icon="plus" data-inset="true" id="variableEnvelopes">
+    
+        </ul>
+      
+      </div><!--main-->
+    
+      <div data-role="footer" class="ui-bar ui-bar-a"  data-position="fixed" style="bottom:0; position:fixed; height: 60px; width:93%;">
+        <object>Base Monthly Income: <font  id="baseMonthlyIncome" color="green"></font></object></br>
+        <object>Bill Total: <font  id="totalMonthlyBills" color="red"></font></object> 
+        <a href="#popupFooterInfo" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-btn-right ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">What is this?</a>
+      </div>
+      <div data-role="popup" id="popupFooterInfo" class="ui-content" data-theme="a" style="max-width:350px;">
+          <p>Total monthly bills is for recurring envelopes and autofill envelopes on a monthly basis.</br>Monthly income is based on initial information for your pay data.</p>
+          <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+      </div><!--info-->
+      <div data-role="popup" id="popupUnaccountedInfo" class="ui-content" data-theme="a" style="max-width:350px;">
+          <div class="ui-bar ui-bar-a ui-responsive">
+            <center><h1>Why negative unnaccounted?</h1></center>
+          </div>
+          <p>This has happened for one of two reasons - you have over budgeted an envelope, or your bank balance is negative. 
+          <p>Adding income to bring your balance positive fixes the second reason. For the over budgeted envelopes, you either spent more than budgeted or adjusted the bank balance to be less than it was, and now less than the budgeted amounts, find an envelope to reduce the amount in and transfer to "Remove Budgeted Amount" the amount it is negative.</p>
+          <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+      </div><!--info-->
+
+  
+<!--Start of popups-->
+
+  
+      <div data-role="popup" data-position-to="#budget" data-overlay-theme="a" data-theme="a" data-dismissible="false"  class="ui-content" id="showAutoFillPopUp">
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+      <div role="main" class="ui-content">
+       <p id="autofillShowHeader"></p>
+        <ul id="AutofillList" data-role="listview" data-mini="true" data-inset="true">
+        
+        </ul>
+        <button id="autoFillOkBut">Ok</button>
+      </div>
+      
+    </div><!--#contact-->
+  
+      <div data-role="popup" data-position-to="#budget" data-overlay-theme="a" data-theme="a" data-dismissible="false"  class="ui-content" id="viewEnvelope">
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        
+        <div id="viewEnvelopeVar" class="ui-grid-solo">
+            <div class="ui-block-a"><div class="ui-bar ui-bar-a" style="height:100px">
+            <label for="viewNameVar"><b>Name:</b></label>
+	    <p name="viewNameVar" id="viewNameVar"></p>
+	    </div></div>
+        </div>
+        <div class="ui-grid-a">
+        
+          <div class="ui-block-a" id="viewRecurHeaderName"><div class="ui-bar ui-bar-a" style="height:100px">
+            <label for="viewNameRecur"><b>Name: </b></label>
+	    <p name="viewNameRecur" id="viewNameRecur"></p>
+	    </div></div>
+          <div class="ui-block-b" id="viewRecurHeaderDue"><div class="ui-bar ui-bar-a" style="height:100px">
+            <label for="viewDue"><b>Due Date:</b></label>
+	    <p name="viewDue" id="viewDue"></p>
+	  </div></div>
+	 
+	  
+	  
+	  <div class="ui-block-a"><div class="ui-bar ui-bar-a" style="height:100px">
+            <label for="viewAmount" id="viewAmountLabel"><b>Amount Due:</b></label>
+	    <p name="viewAmount" id="viewAmount"></p>
+	  </div></div>
+	  <div class="ui-block-b"><div class="ui-bar ui-bar-a" style="height:100px">
+            <label for="viewBal"><b>Current Balance:</b></label>
+	    <p name="viewBal" id="viewBal"></p>
+	  </div></div>
+	</div><!--grid-a-->
+	<div class="ui-grid-a ui-responsive">
+	  <div class="ui-block-a"><div class="ui-bar ui-bar-a" style="height:60px">
+            <button id="deleteBillButton">Delete Bill</button>
+	  </div></div>
+	  <div class="ui-block-b"><div class="ui-bar ui-bar-a" style="height:60px">
+            <button id="editBillButton">Edit Bill</button>
+	  </div></div>
+	</div><!--grid b-->
+        
+      </div><!--#viewEnvelope-->
+  
+      <div data-role="popup" data-position-to="window" data-overlay-theme="a" data-theme="a" data-dismissible="false" class="ui-content ui-responsive" id="addTrans">
+        <a id="addTransClose"  class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+          <div class="ui-field-contain">
+           
+            <fieldset data-mini=true data-role="controlgroup" data-type="horizontal">
+	      <legend>Type of Transaction:</legend>
+	      <input type="radio" name="radio-choice-trans" id="radio-choice-income" value="transfer" ><label for="radio-choice-income">Transfer</label>
+	      <input type="radio" name="radio-choice-trans" id="radio-choice-expense" value="expense" checked="checked"><label for="radio-choice-expense">Expense</label>
+            </fieldset>
+            
+            <label id="addTransEnvLabel" for="select-native-2">Add to:</label><select name="select-native-2" id="addTransEnvSelect" data-mini="true"><!--filled in app.js-->
+	    </select>
+	    <div id="incomeDiv" hidden>
+	    <label for="select-native-3">Pull From:</label><select name="select-native-3" id="addTransEnvSelectPullFrom" data-mini="true"><!--filled in app.js--></select>
+	    </div>
+	    <label for="transAmount">Amount:</label>
+	    <input type="number" data-mini=true name="transAmount" value="" id="transAmount" placeholder="Transaction Amount">
+	    <div id="transForDiv">
+	    <label for="transFor">For:</label>
+	    <input type="text" data-mini=true name="transFor" value="" id="transFor" placeholder="Fun">
+	    </div>
+	    <div id="submitTransDiv" hidden>
+	      </br>
+	      <button id="submitTransBut" data-mini=true>Submit</button>
+	    </div>
+          </div>
+      </div><!--#addTrans--> 
+      <div data-role="popup" data-position-to="window" data-overlay-theme="a" data-theme="a" data-dismissible="true" class="ui-content ui-responsive" id="adjustBankBal"> 
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        <div class="ui-bar-a">
+        <center>
+        <h3>Adjust Balance</h3>
+        </center>
+        </div>
+        
+        <label for="adjustBankAmount">Adjust to:</label>
+        <input type="number" name="adjustBankAmount" id="adjustBankAmount" value="" placeholder="" data-mini=true>
+        </br>
+        <button id="adjustBankBalSubmitBut">Submit</button>
+        
+      </div><!--#adjustBank-->
+      <div data-role="popup" data-position-to="window" data-overlay-theme="a" data-theme="a" data-dismissible="true" class="ui-content ui-responsive" id="helperPopUp"> 
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        <div class="ui-bar-a">
+        <center>
+        <h3 id="helperHeader"></h3>
+        </center>
+        </div>
+        <p id="helperText"></p>
+        </br>
+        <div id="otherTransSelect" hidden>
+          <select name="select-native-2" id="addTransHelperSelect" data-mini="true"><!--filled in app.js-->
+	  </select>
+        </div>
+        <button id="helperOkBut">Ok</button>
+        
+      </div><!--#helperPopUp-->
+      
+      
+      <div data-role="popup" data-position-to="window" data-overlay-theme="a" data-theme="a" data-dismissible="false" class="ui-content ui-responsive" id="addIncome"> 
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        <div class="ui-bar-a">
+        <center>
+        <h3>Add Income</h3>
+        </center>
+        </div>
+        <label for="radio-choice-addIncome">Only choose paycheck when you have been paid - it changes when you are paid next, changing autofill amounts.</label>
+        <fieldset data-mini=true data-role="controlgroup" data-type="horizontal">
+	  <input type="radio" name="radio-choice-addIncome" id="radio-choice-pay" value="paycheck" checked="checked"><label for="radio-choice-pay">Paycheck</label>
+	  <input type="radio" name="radio-choice-addIncome" id="radio-choice-other" value="otherPay" ><label for="radio-choice-other">Other Income</label>
+        </fieldset>
+        <label for="addIncomeAmount">How much were you paid?</label>
+        <input type="number" name="addIncomeAmount" value="" data-mini=true placeholder="" id="addIncomeAmount">
+        </br>
+        <button data-mini=true id="submitAddIncome">Submit</button>
+      </div><!--#addIncome-->
+      
+      <div data-role="popup" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-content" id="deleteBillConfirm">
+        <p>Delete <object id="deleteBillConfirmName"></object>.</br> Are you sure you want to continue with the operation?</p>  
+        <button class="ui-btn-inline ui-btn ui-mini" onclick="window.history.back()">Cancel</button>
+        <button class="ui-btn-inline ui-btn ui-mini" id="deleteBillConfirmConfirmed">Delete Data</button>
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+      </div><!--#deleteBillConfirm-->
+      
+      <div data-role="popup" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-content" id="deleteData">
+        <p>This will delete all data related to your budget.</br> Are you sure you want to continue with the operation?</p>  
+        <button class="ui-btn-inline ui-btn ui-mini" onclick="window.history.back()">Cancel</button>
+        <button class="ui-btn-inline ui-btn ui-mini" onclick="deleteData()">Delete Data</button>
+        <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+      </div><!--#deleteData-->
+      
+  
+    </div><!--#budget-->
+   
+
+
+<!--Start of internal pages-->
+<div data-role="page" id="editPayData">
+      <div role="main" class="ui-content">
+       
+         <div data-role="header"><h3>Edit Pay Data</h3><a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-back ui-btn-icon-notext ui-btn-left">Close</a></div>
+        <label for="edit-payAmount">Paycheck amount:</label>
+        <input type="number" name="edit-payAmount" id="edit-payAmount" value="" placeholder="What are you usually paid?">
+        
+        <p>Confirm Payday: <input type="text" value="" onfocus="blur()" id="edit-payday"></p>
+        
+        <div id="edit-payFreqDiv">
+          <label for="edit-payFreq">Pay Frequency:</label>
+          <select name="edit-payFreq" id="edit-payFreq">
+            <option value=""></option>
+            <option value="weekly">Weekly</option>
+            <option value="biweekly">Bi-weekly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+        </div>
+        
+        </br></br>
+        <center>
+          <a class="ui-btn-inline ui-btn ui-mini" id="editPayDataBut" data-transition='pop'>Submit</a>
+        </center>
+         <script type="text/javascript">
+          
+          $( function() {
+            $( "#edit-payday" ).datepicker();
+           } );
+        </script>
+      </div><!--main-->
+    </div><!--#editPayData-->
+  
+      
+   <div data-role="page" id="viewTrans"> 
+     <div role="main" class="UI-content"> 
+       <div data-role="header">
+         <h3>Transactions<a href="index.html" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-back ui-btn-icon-notext ui-btn-left">Close</a></h3>
+       </div>
+  
+       </br>
+       <ul data-role="listview" data-filter="true" data-mini="true" data-filter-placeholder="Search tansactions..." data-inset="true" id="viewTransList">
+    
+       </ul>
+     </div>
+   </div><!--#viewTrans-->
+
+   <div data-role="page" id="about">
+   
+      <div role="main" id="aboutMain" class="UI-content">
+        <a href="index.html" data-transition="pop" data-ajax=false  class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-back ui-btn-icon-notext ui-btn-left">Close</a>
+        <center><h3 class="ui-bar ui-bar-a ui-corner-all">About Brawer Budget</h3></center>
+        <div class="ui-body">
+	  <p>
+	    I, personally, have found most budgeting apps to be too feature packed for my budgeting needs. I don't need reports, and it certainly doesn't work for me to budget on a monthly scale. So, I created this app to suit my needs, and hopefully yours too. </p><p>With Brawer Budget, you can budget weekly, bi-weekly, or monthly in a simple and logical way that will help ensure you always have money for your bills. Let me explain how it works.
+	  </p>
+	  <center><h3 class="ui-bar ui-bar-a ui-corner-all">How It Works</h3></center>
+	  <center><a href="https://www.youtube.com/embed/wa7mn33MTEs" class="ui-btn">Youtube Walkthrough</a></center>
+	  <p>We start by asking you what you normally get paid, how frequently you get paid, and when your next pay day is. This information is used for autofilling the bills/envelopes you create. It is also used to show your base monthly income. Next, we will ask for you to enter your bills, or envelopes. Say Netflix is due on the 15th of every month for 12 dollars or so. Put this in as a recurring envelope. Another options is what we call "variable" envelopes. These are for things you spend out of everyday/week. Gas, for example. Suppose you generally spend 30 per check on gas. Select variable for these types of expenses. You can then set a goal amount per month. This goal is really only for your reference. It is not used by the app and will not affect monthly bill totals or how envelopes are autofilled. You have the option of autofilling variable envelopes per paycheck. I personally autofill my Gas envelope per check.</p>
+	
+	  <p>When you later enter your paycheck amount, when you get paid, the app will fill your recurring envelopes based on when the bill is due and how many checks you will receive before it is due. For example, Bill of Bills is due in three weeks for a total of 120 dollars. The envelope for this bill has 30 dollars in it. I need to have 90 more in there before it is due. I get paid weekly, so this check is going to autofill 30 more for me. At the end of the operation, left over money will sit in "unaccounted monies" that can be used to fill envelopes at your discretion, or left as a buffer for if you spend more in gas than you expected. </p>
+	  <p>Envelopes are displayed on the main screen with their balance. Recurring bills show up as a negative amount to show amount needed by the time they are due. This will adjust based on the available balance within the envelope.
+	  </p>
+	  <p>This app works for you best when you enter transactions when you spend money, and when you make money. Use this daily, and it will help you tremendously.</p>
+	 <p> Also, this app is a webpage, true. But it can be "installed" to your phone and used as a native app by adding it to your homescreen. All data is stored on your phone and is never transmitted across the interwebs for any reason. We are not tracking anything about users, visitors, or alien spies. 
+	  </p>
+	 <p> Further tutorial information is forthcoming. Thank you for your patience. Please direct any questions to us through the "Contact" item in the app menu.
+	  </p>
+	  <center><h3 class="ui-bar ui-bar-a ui-corner-all">Is using it free?</h3></center>
+	  <p>Yes! Brawer Budget will always be free. We do ask, though, that if you find it useful, please consider a monthly donation through Patreon. We don't like the idea of using ads, or making it a paid app. We find ads super annoying, so we won't use them to annoy you. Nor will we prompt you for donations like NPR does every six months. It is a "pay what you want" model of business for us.</p>
+	   </br></br>
+	   <div id="startBudgetBut"><a class="ui-btn-inline ui-btn ui-mini" href="#addBudgetPay">Start Budgeting!</a></div>
+
+	</div><!--uibody-->
+      </div><!--main-->
+    </div><!--about-->
+
+    <div data-role="page" id="addBudgetPay">
+      <div role="main" class="ui-content">
+        <h1>Pay Data</h1>
+        <label for="payAmount">Paycheck amount:</label>
+        <input type="number" name="payAmount" id="payAmount" value="" placeholder="What are you usually paid?">
+       
+        <p>Next Payday: <input type="text" value="" onfocus="blur()" id="payday"></p>
+        
+        <div id="payFreqDiv" hidden>
+          <label for="payFreq">Pay Frequency:</label>
+          <select name="payFreq" id="payFreq">
+            <option value=""></option>
+            <option value="weekly">Weekly</option>
+            <option value="biweekly">Bi-weekly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+        </div>
+        
+        <div id="procPaySubmitBut"  hidden>
+          </br></br>
+          <center>
+            <a class="ui-btn-inline ui-btn ui-mini" href='#enterInitialBankBal' data-transition='pop'>Enter Bank Balance</a>
+          </center>
+        </div> 
+        
+        <script type="text/javascript">
+          
+          $( function() {
+            $( "#payday" ).datepicker();
+           } );
+          $('#payday').change(function() {
+            $("#payFreqDiv").show();
+          });
+          $('#payFreq').change(function() {          
+            $("#procPaySubmitBut").show();
+          });
+        </script>
+        
+      </div><!--main-->
+    </div><!--#addBudgetPay-->
+    
+     <div data-role="page" id="enterInitialBankBal"> 
+        <a href="#addBudgetPay" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-back ui-btn-icon-notext ui-btn-left">Close</a>
+        <div class="ui-bar-a">
+        <center>
+        <h3>Initial Bank Balance</h3>
+        </center>
+        </div>
+        
+        <label for="initialBankAmount">Adjust to:</label>
+        <input type="number" name="initialBankAmount" id="initialBankAmount" value="" placeholder="" data-mini=true>
+        </br>
+        <button onclick="initialBankBalSubmitted()" id="initialBankBalSubmitBut">Submit</button>
+        
+      </div><!--#enterInitialBankBal-->
+
+    <div  data-role="page" id="editBudgetEnvelope">
+
+      <a href="index.html" data-transition="pop" data-ajax=false  class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-back ui-btn-icon-notext ui-btn-left">Close</a>
+      <div role="main" class="ui-content">
+        
+        <h1>Edit Envelope</h1>
+        
+        <label for="edit-billName">Bill Name:</label>
+        <input data-mini=true type="text" name="edit-billName" id="edit-billName" value="" placeholder="Name">
+        
+        <label for="edit-variableOrRecur">Variable:</label>
+        <select name="edit-variableOrRecur" id="edit-variableOrRecur" data-mini=true data-role="flipswitch">
+          <option value="recurring">No</option>
+          <option value="variable">Yes</option>
+          
+        </select><a href="#edit-popupVariableInfo" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">What is this?</a>
+        
+        <label for="edit-billAmount" id="edit-amountLabel"><p>Amount Due:</p></label>
+        <input data-mini=true type="number" name="edit-billAmount" id="edit-billAmount" value="" placeholder="Usual amount">
+        
+        <div id="edit-autofillVariableOptDiv" hidden>
+          <label for="edit-autofillVariableOpt">Auto fill?</label>
+          <select name="edit-autofillVariableOpt" id="edit-autofillVariableOpt" data-mini=true data-role="flipswitch">
+            <option value="autofillVariableFalse">No</option>
+            <option value="autofillVariableTrue">Yes</option>
+          </select>
+        </div>
+        <div id="edit-autofillVariableAmountDiv" hidden>
+            <label for="edit-autofillVariableAmount">How much per check?</label>
+            <input data-mini=true type="number" value="" placeholder="0" id="edit-autofillVariableAmount" name="edit-autofillVariableAmount">
+        </div>
+        
+        <div id="edit-dueDateContainer">
+        <label for="edit-dueDate">Typical Due Date:</label>
+        <select data-mini=true name="edit-dueDate" id="edit-dueDate">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="24">24</option>
+          <option value="25">25</option>
+          <option value="26">26</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="29">29</option>
+          <option value="30">30</option>
+          <option value="31">31</option>
+        </select>
+        </div>
+        </br>
+        <p id="edit-bal" value="" hidden></p>
+        <p id="edit-origBillName" value="" hidden></p>
+        <div id="edit-saveButs">
+          <center>
+            <a id="edit-subBt" class="ui-btn-inline ui-btn ui-mini" data-transition='pop'>Save and Close</a>
+          </center>
+        </div> 
+        
+        <script type="text/javascript">
+         
+          $("#edit-variableOrRecur").change(function() {
+            if(document.getElementById("edit-variableOrRecur").value === "variable") {
+              $("#edit-dueDateContainer").hide();
+              $("#edit-autofillVariableOptDiv").show();
+              document.getElementById("edit-amountLabel").innerHTML = 'Goal:';
+            }
+            else {
+              $("#edit-dueDateContainer").show();
+              $("#edit-autofillVariableOptDiv").hide();
+              document.getElementById("edit-amountLabel").innerHTML = 'Amount Due:';
+            }
+          });
+          
+          $("#edit-billName").change(function() {
+            getBills().then(function (result) {
+            var MyBills = result;
+            if(MyBills.length === 0){
+               $("#edit-saveButs").show();
+            }
+            MyBills.forEach(function(bill) {
+              if(document.getElementById("edit-billName").value === bill.billName) {
+                 alert("This bill already exists, change name please.");
+                 $("#edit-saveButs").hide();
+              }
+              else {
+                 $("#edit-saveButs").show();
+              }
+            });
+            });
+          });
+          $("#edit-autofillVariableOpt").change(function() {
+            if(document.getElementById("edit-autofillVariableOpt").value === "autofillVariableTrue") {
+              
+              $("#edit-autofillVariableAmountDiv").show();
+
+            }
+            else {
+              $("#edit-autofillVariableAmountDiv").hide();
+            }
+          });
+
+          function editsave(){
+
+            var origBillName = document.getElementById("edit-origBillName").value;
+            var autofillVarAmount = document.getElementById("edit-autofillVariableAmount").value;
+            var autofillBoolean = document.getElementById("edit-autofillVariableOpt").value;
+            var billName =  document.getElementById("edit-billName").value;
+            var amount =  parseFloat(document.getElementById("edit-billAmount").value, 10);
+            if(isNaN(amount)) {
+            	amount = "0.00";
+            }
+            var variable =  document.getElementById("edit-variableOrRecur").value;
+            var dueDate;
+            if(variable === "variable"){
+              dueDate = null;
+            }
+            else {
+              dueDate =  document.getElementById("edit-dueDate").options[document.getElementById("edit-dueDate").selectedIndex].value;
+            }
+            var bal =  document.getElementById("edit-bal").value;
+            
+            var billData = new Object();
+            billData.billName = billName;
+            billData.amount = amount;
+            billData.dueDate = dueDate;
+            billData.autofillVarAmount = autofillVarAmount;
+            billData.autofillBoolean = autofillBoolean;
+            billData.variable = variable;
+            billData.bal = bal;
+            
+            
+            updateBill(origBillName, billData);
+            };
+          document.getElementById("edit-subBt").addEventListener("click", function() {
+            
+            editsave();
+            window.location = "index.html";
+          });
+         
+          
+        </script>
+        
+      </div><!--main-->
+      
+      <div data-role="popup" id="edit-popupVariableInfo" class="ui-content" data-theme="a" style="max-width:350px;">
+          <p>Is this a recurring bill or an envelope to fill with disposable income?</p>
+          <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+      </div><!--info-->
+    </div><!--#editBudgetEnvelope-->
+    
+    
+<div  data-role="page" id="addBudgetEnvelope">
+
+      
+      <div role="main" class="ui-content">
+        
+        <center><h3>Add Envelope<a onclick="window.location.assign('https://brawer.online' + window.location.pathname)"  class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-back ui-btn-icon-notext ui-btn-left ui-responsive">Close</a></h3></center>
+        
+        <label for="billName">Bill Name:</label>
+        <input data-mini=true type="text" name="billName" id="billName" value="" placeholder="Name">
+        
+        <label for="variableOrRecur">Variable:</label>
+        <select name="variableOrRecur" id="variableOrRecur" data-mini=true data-role="flipswitch">
+          <option value="recurring">No</option>
+          <option value="variable">Yes</option>
+          
+        </select><a href="#popupVariableInfo" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">What is this?</a>
+        
+        <label for="billAmount" id="amountLabel"><p>Amount Due:</p></label>
+        <input data-mini=true type="number" name="billAmount" id="billAmount" value="" placeholder="Usual amount">
+        
+        <div id="autofillVariableOptDiv" hidden>
+          <label for="autofillVariableOpt">Auto fill?</label>
+          <select name="autofillVariableOpt" id="autofillVariableOpt" data-mini=true data-role="flipswitch">
+            <option value="autofillVariableFalse">No</option>
+            <option value="autofillVariableTrue">Yes</option>
+          </select>
+        </div>
+        <div id="autofillVariableAmountDiv" hidden>
+            <label for="autofillVariableAmount">How much per check?</label>
+            <input data-mini=true type="number" value="" placeholder="0" id="autofillVariableAmount" name="autofillVariableAmount">
+        </div>
+        
+        <div id="dueDateContainer">
+        <label for="dueDate">Typical Due Date:</label>
+        <select data-mini=true name="dueDate" id="dueDate">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="24">24</option>
+          <option value="25">25</option>
+          <option value="26">26</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="29">29</option>
+          <option value="30">30</option>
+          <option value="31">31</option>
+        </select>
+        </div>
+        </br>
+       
+        <div id="saveButs" hidden>
+          <center>
+            <a id="subBt" class="ui-btn-inline ui-btn ui-mini" data-transition='pop'>Save and Close</a>
+            <a id="subBt2" class="ui-btn-inline ui-btn ui-mini" data-transition='pop'>Save and Add Another</a>
+          </center>
+        </div> 
+        
+        <script type="text/javascript">
+        
+          var billNamed = false;
+          var amountSet = false;
+          var executionStopped = false; //used to stop reload of page
+          
+          $("#variableOrRecur").change(function() {
+            if(document.getElementById("variableOrRecur").value === "variable") {
+              $("#dueDateContainer").hide();
+              $("#autofillVariableOptDiv").show();
+              document.getElementById("amountLabel").innerHTML = 'Goal:';
+            }
+            else {
+              $("#dueDateContainer").show();
+              $("#autofillVariableOptDiv").hide();
+              document.getElementById("amountLabel").innerHTML = 'Amount Due:';
+            }
+          });
+          $("#autofillVariableOpt").change(function() {
+            if(document.getElementById("autofillVariableOpt").value === "autofillVariableTrue") {
+              
+              $("#autofillVariableAmountDiv").show();
+
+            }
+            else {
+              $("#autofillVariableAmountDiv").hide();
+            }
+          });
+          $("#billName").change(function() {
+            getBills().then(function (result) {
+            var MyBills = result;
+            if(MyBills.length === 0){
+               $("#saveButs").show();
+            }
+            MyBills.forEach(function(bill) {
+              if(document.getElementById("billName").value === bill.billName) {
+                 alert("This bill already exists, change name please.");
+                 $("#saveButs").hide();
+              }
+              
+            });
+            });
+            billNamed = true;
+            if(billNamed && amountSet) {
+              $("#saveButs").show();
+            }
+          });
+          
+          $("#billAmount").change(function () {
+            amountSet = true;
+            if(billNamed && amountSet) {
+              $("#saveButs").show();
+            }
+          });
+          
+          function save(){
+            executionStopped = false;
+            var billName = document.getElementById("billName").value;
+            var amount =  parseFloat(document.getElementById("billAmount").value, 10);
+            if(isNaN(amount)) {
+            	amount = "0.00";
+            }
+            var variable =  document.getElementById("variableOrRecur").value;
+            var dueDate;
+            var autofillVarAmount = document.getElementById("autofillVariableAmount").value;
+            var autofillBoolean = document.getElementById("autofillVariableOpt").value;
+            
+            if(billName != "" && amount != "") {
+	            if(variable === "variable"){
+	              dueDate = null;
+	            }
+	            else {
+	              dueDate =  document.getElementById("dueDate").options[document.getElementById("dueDate").selectedIndex].value;
+	            }
+	            var bal =  "0.00";
+	            var billData = new Object();
+	            billData.billName = billName;
+	            billData.amount = amount;
+	            billData.dueDate = dueDate;
+	            billData.autofillVarAmount = autofillVarAmount;
+	            billData.autofillBoolean = autofillBoolean;
+	            billData.variable = variable;
+	            billData.bal = bal;
+	            
+	            addToDB(billData, "bills");
+	           }
+	    else {
+	    	alert("Please enter both a Name and Amount");
+	    	executionStopped = true;
+	    	
+	    }
+            };
+          document.getElementById("subBt").addEventListener("click", function() {
+            save();
+            if(!executionStopped){
+              window.location = "index.html";
+              }
+          });
+          document.getElementById("subBt2").addEventListener("click", function() {
+            save();
+            if(!executionStopped) {
+              $(':mobile-pagecontainer').pagecontainer('change', '#addBudgetEnvelope', { allowSamePageTransition: "true" });
+              document.getElementById("billName").value = "";
+              document.getElementById("billAmount").value = "";
+              $("#variableOrRecur").val("recurring").flipswitch("refresh");
+              var dueDate = $("#dueDate");
+  	      dueDate.val(1).attr('selected', true).siblings('option').removeAttr('selected');
+  	      dueDate.selectmenu("refresh", true);
+  	      $("#autofillVariableOptDiv").hide();
+  	      $("#autofillVariableOpt").val("autofillVariableFalse").flipswitch("refresh");
+  	      $("#autofillVariableAmountDiv").hide();
+  	      document.getElementById("autofillVariableAmount").value = "";    
+  	      
+  	      }
+            
+          });
+          
+        </script>
+        
+      </div><!--main-->
+      
+      <div data-role="popup" id="popupVariableInfo" class="ui-content" data-theme="a" style="max-width:350px;">
+          <p>Is this a recurring bill or an envelope to fill with disposable income?</p>
+          <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+      </div><!--info-->
+    </div><!--#addBudgetEnvelope-->
+    
+    
+  
+
+    
+  </body>
+</html>
