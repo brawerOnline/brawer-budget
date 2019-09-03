@@ -1,0 +1,2 @@
+# brawer-budget
+This is a project I undertook to help ease my budgeting by making it automated, to an extent. By entering my expenses and income, I can stay on top of my budget. Furthermore, when I enter my paycheck amount, which changes, the app dispurses it into envelopes automatically based on when they are due or if I have selected an autofill amount per check. A video walkthrough of it is here - https://youtu.be/wa7mn33MTEs
